@@ -4,16 +4,15 @@ using System.Text.RegularExpressions;
 
 namespace Arc.Utility.Serialization
 {
-    public class JsonWriter: TextWriter, IBaseJsonWriter<JsonWriter>
+    public class JsonWriter(TextWriter writer): TextWriter, IBaseJsonWriter<JsonWriter>
     {
-        TextWriter writer;
+        readonly TextWriter writer = writer;
         Stack<JsonObject> stack = new();
         JsonObject? current;
         bool named;
         OutputType outputType = OutputType.Json;
         bool quoteLongValues = false;
 
-        public JsonWriter(TextWriter writer) => this.writer = writer;
         public TextWriter Writer => writer;
 
         public override Encoding Encoding => writer.Encoding;
@@ -56,10 +55,10 @@ namespace Arc.Utility.Serialization
                 && value is long or double or decimal or BigInteger)
             {
                 value = value.ToString();
-            } else if (value?.IsNumericType() ?? false)
+            } else if (value?.__IsNumericType() ?? false)
             {
-                long longValue = value.LongValue();
-                if (value.DoubleValue() == longValue)
+                long longValue = value.__LongValue();
+                if (value.__DoubleValue() == longValue)
                 {
                     value = longValue;
                 }
@@ -171,7 +170,7 @@ namespace Arc.Utility.Serialization
         private static readonly Regex minimalValuePattern = MinimalValuePattern();
         extension(object obj)
         {
-            internal bool IsNumericType() => obj switch
+            internal bool __IsNumericType() => obj switch
             {
                 null => false,
                 byte
@@ -187,7 +186,52 @@ namespace Arc.Utility.Serialization
                     or decimal => true,
                 _ => false,
             };
-            internal long LongValue() => obj switch
+            internal byte __ByteValue() => obj switch
+            {
+                byte val => val,
+                sbyte val => (byte) val,
+                ushort val => (byte) val,
+                short val => (byte) val,
+                uint val => (byte) val,
+                int val => (byte) val,
+                ulong val => (byte) val,
+                long val => (byte) val,
+                float val => (byte) val,
+                double val => (byte) val,
+                decimal val => (byte) val,
+                _ => throw new InvalidOperationException("Not a number"),
+            };
+            internal short __ShortValue() => obj switch
+            {
+                byte val => val,
+                sbyte val => (byte) val,
+                ushort val => (byte) val,
+                short val => (byte) val,
+                uint val => (byte) val,
+                int val => (byte) val,
+                ulong val => (byte) val,
+                long val => (byte) val,
+                float val => (byte) val,
+                double val => (byte) val,
+                decimal val => (byte) val,
+                _ => throw new InvalidOperationException("Not a number"),
+            };
+            internal int __IntValue() => obj switch
+            {
+                byte val => val,
+                sbyte val => (byte) val,
+                ushort val => (byte) val,
+                short val => (byte) val,
+                uint val => (byte) val,
+                int val => (byte) val,
+                ulong val => (byte) val,
+                long val => (byte) val,
+                float val => (byte) val,
+                double val => (byte) val,
+                decimal val => (byte) val,
+                _ => throw new InvalidOperationException("Not a number"),
+            };
+            internal long __LongValue() => obj switch
             {
                 byte val => val,
                 sbyte val => val,
@@ -202,7 +246,22 @@ namespace Arc.Utility.Serialization
                 decimal val => (long) val,
                 _ => throw new InvalidOperationException("Not a number"),
             };
-            internal double DoubleValue() => obj switch
+            internal float __FloatValue() => obj switch
+            {
+                byte val => val,
+                sbyte val => val,
+                ushort val => val,
+                short val => val,
+                uint val => val,
+                int val => val,
+                ulong val => val,
+                long val => val,
+                float val => val,
+                double val => (float) val,
+                decimal val => (float) val,
+                _ => throw new InvalidOperationException("Not a number"),
+            };
+            internal double __DoubleValue() => obj switch
             {
                 byte val => val,
                 sbyte val => val,
@@ -228,7 +287,7 @@ namespace Arc.Utility.Serialization
                     return "null";
                 }
                 string? str = value.ToString();
-                if (value.IsNumericType() || value is bool)
+                if (value.__IsNumericType() || value is bool)
                 {
                     return str!;
                 }

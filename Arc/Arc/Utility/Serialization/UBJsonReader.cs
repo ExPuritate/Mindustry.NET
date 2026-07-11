@@ -48,8 +48,8 @@ namespace Arc.Utility.Serialization
             (byte) 'I' => new(ReadShort(reader)),
             (byte) 'l' => new(ReadInt(reader)),
             (byte) 'L' => new(ReadLong(reader)),
-            (byte) 'd' => new(reader.ReadSingle()),
-            (byte) 'D' => new(reader.ReadDouble()),
+            (byte) 'd' => new(ReadFloat(reader)),
+            (byte) 'D' => new(ReadDouble(reader)),
             // s is not standard
             (byte) 's' or (byte) 'S' => new(ParseString(reader, type)),
             (byte) 'a' or (byte) 'A' => ParseData(reader, type),
@@ -272,6 +272,19 @@ namespace Arc.Utility.Serialization
             Span<byte> buffer = stackalloc byte[sizeof(long)];
             reader.ReadExactly(buffer);
             return BinaryPrimitives.ReadInt64BigEndian(buffer);
+        }
+
+        protected float ReadFloat(BinaryReader reader)
+        {
+            Span<byte> buffer = stackalloc byte[sizeof(float)];
+            reader.ReadExactly(buffer);
+            return BinaryPrimitives.ReadSingleBigEndian(buffer);
+        }
+        protected double ReadDouble(BinaryReader reader)
+        {
+            Span<byte> buffer = stackalloc byte[sizeof(double)];
+            reader.ReadExactly(buffer);
+            return BinaryPrimitives.ReadDoubleBigEndian(buffer);
         }
         protected string ReadString(BinaryReader reader, long size)
         {
