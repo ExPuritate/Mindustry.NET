@@ -1,3 +1,19 @@
 <Solution>
-  <Project Path="Mindustry.Desktop/Mindustry.Desktop.csproj" />
+  <Folder Name="/Arc/">
+    <Project Path="D:/Mindustry.NET/Arc/Arc/Arc.csproj" />
+  </Folder>
+  <Folder Name="/Arc/backends/">
+    <Project Path="D:/Mindustry.NET/Arc/backends/Arc.Backend.SDL/Arc.Backend.SDL.csproj" />
+  </Folder>
+  <Folder Name="/解决方案项/">
+    <File Path=".editorconfig" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="SERVERLIST.md" />
+    <File Path="servers_v6.json" />
+    <File Path="servers_v7.json" />
+    <File Path="TRANSLATING.md" />
+  </Folder>
+  <Project Path="D:/Mindustry.NET/Mindustry.Core/Mindustry.Core.csproj" />
+  <Project Path="D:/Mindustry.NET/Mindustry.Desktop/Mindustry.Desktop.csproj" />
 </Solution>

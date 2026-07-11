@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Arc\Arc.csproj" />
+  </ItemGroup>
+
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);$(OS)</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- GL.cs configuration options! -->
+
+		<!-- Profile: CORE/COMPAT -->
+		<!-- COMPAT not implemented yet -->
+		<OpenGLProfile>CORE</OpenGLProfile>
+
+		<!-- Version: Any valid OpenGL version from 1.0-4.6 -->
+		<OpenGLVersionMajor>3</OpenGLVersionMajor>
+		<OpenGLVersionMinor>3</OpenGLVersionMinor>
+
+		<!-- Defining exposed wrapper API (SAFE/UNSAFE/BOTH) -->
+		<!-- SAFE: Only safe functions are exposed -->
+		<!-- UNSAFE: Only unsafe functions are exposed -->
+		<!-- BOTH: Both safe and unsafe functions are exposed -->
+		<OpenGLWrapperAPI>BOTH</OpenGLWrapperAPI>
+
+		<!-- Defining constants for compile time availability of APIs -->
+		<DefineConstants>$(DefineConstants);OGL_V_$(OpenGLVersionMajor)_$(OpenGLVersionMinor);OGL_P_$(OpenGLProfile);OGL_WRAPPER_API_$(OpenGLWrapperAPI)</DefineConstants>
+	</PropertyGroup>
+
+</Project>

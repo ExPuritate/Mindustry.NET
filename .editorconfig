@@ -1,0 +1,4 @@
+[*.cs]
+max_line_length = 80
+csharp_wrap_after_declaration_lpar = true
+csharp_wrap_parameters_style = chop_if_long

@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Arc\Arc\Arc.csproj" />
+    <ProjectReference Include="..\Arc\backends\Arc.Backend.SDL\Arc.Backend.SDL.csproj" />
+    <ProjectReference Include="..\Mindustry.Core\Mindustry.Core.csproj" />
+  </ItemGroup>
+
 </Project>
